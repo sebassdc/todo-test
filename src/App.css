@@ -1,0 +1,101 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+@font-face {
+  font-family: 'Roboto Bold';
+  src: url('./assets/Roboto-Bold.ttf')
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('./assets/Roboto-Regular.ttf')
+}
+
+.app {
+  text-align: center;
+  font-family: 'Roboto';
+}
+
+.app-logo {
+  animation: app-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+.app__header {
+  background-color: #21262D;
+  height: calc(100vh * 0.2);
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
+  color: white;
+}
+
+.app__header h1 {
+  font-size: 40px;
+  background-color: #EAD541;
+  padding: 25px;
+  padding-left: 60px;
+  color: #21262D;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.4);
+}
+/* #EAD541 */
+
+.app__body__auth, .app__body__login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #EAD541;
+  height: calc(100vh * 0.8);
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+}
+
+.button {
+  border: none;
+  text-decoration: none;
+  padding: 20px;
+  margin: 30px;
+  font-size: 23px;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.4);
+  transition: all 0.3s ease-in-out;
+}
+
+.button:hover {
+  box-shadow: 7px 5px 20px rgba(0, 0, 0, 0.6);
+  transform: rotate3d(20deg, 0, 0);
+  transition: all 0.1s ease-in-out;
+}
+.button:active {
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.6);
+}
+
+.button--login {
+  background-color: #21262D;
+  color: #EAD541;
+}
+
+.button--register {
+  background-color: #EAD541;
+  border: 3px solid #21262D;
+  color: #21262D;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-container input {
+  background-color: #EAD541;
+  border: 3px solid #21262D;
+  padding: 20px;
+  margin: 30px;
+  font-size: 23px;
+}
