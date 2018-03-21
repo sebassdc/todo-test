@@ -14,6 +14,11 @@
   src: url('./assets/Roboto-Regular.ttf')
 }
 
+@font-face {
+  font-family: 'Acumin';
+  src: url('./assets/Acumin_Pro_Thin.otf')
+}
+
 .app {
   text-align: center;
   font-family: 'Roboto';
@@ -43,7 +48,11 @@
 }
 /* #EAD541 */
 
-.app__body__auth, .app__body__login {
+.app__body__auth,
+.app__body__login,
+.app__body__register,
+.app__body__todo
+{
   display: flex;
   justify-content: center;
   align-items: center;
@@ -61,7 +70,6 @@
   border: none;
   text-decoration: none;
   padding: 20px;
-  margin: 30px;
   font-size: 23px;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.4);
   transition: all 0.3s ease-in-out;
@@ -79,12 +87,26 @@
 .button--login {
   background-color: #21262D;
   color: #EAD541;
+  margin: 30px;
 }
 
 .button--register {
   background-color: #EAD541;
   border: 3px solid #21262D;
   color: #21262D;
+  margin: 30px;
+}
+
+.button--add {
+  border: 3px solid #21262D;
+  padding: 10px 20px;
+  margin-top: 20px;
+}
+
+.button--add-ok {
+  border: 1px solid #EAD541;
+  color: #EAD541;
+  margin: 10px 20px;
 }
 
 .form-container {
@@ -98,4 +120,64 @@
   padding: 20px;
   margin: 30px;
   font-size: 23px;
+}
+
+.app__body__register input {
+  margin: 20px;
+}
+
+.app__body__todo {
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+}
+
+.todo-container {
+  width: 100%;
+}
+
+.todo-item {
+  background-color: #21262D;
+  border: 1px solid #21262D;
+  height: 50px;
+  font-family: 'Acumin';
+  font-size: 23px;
+  font-weight: bolder;
+  color: white;
+  display: flex;
+  align-items: center;
+}
+
+.todo-item span {
+  margin-left: 20px;
+}
+
+.modal-container {
+  position: fixed;
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.8)
+}
+
+.modal {
+  margin-top: 40px;
+  background-color: #21262D;
+  width: 80%;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+}
+
+.todo-input {
+  margin: 0 20px;
+  margin-top: 20px;
+  border: 1px solid #EAD541;
+  color: white;
+  font-size: 20px;
+  font-family: 'Acumin';
+  font-weight: bolder;
+  background-color: transparent;
+  padding: 15px;
 }

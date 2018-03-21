@@ -2,41 +2,9 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import logo from './logo.svg';
 import './App.css';
-
-class Login extends Component {
-  state = {
-    email: '',
-    password: '',
-  }
-  handleChange = e => {
-    this.setState({
-      [e.target.name]: e.target.value
-    })
-  }
-  render () {
-    return(
-      <div className='app__body__login'>
-        <div className='form-container'>
-          <input
-            value={this.state.email}
-            name='email'
-            onChange={this.handleChange}
-            type='email'
-            placeholder='email'
-            />
-          <input
-            value={this.state.password}
-            name='password'
-            onChange={this.handleChange}
-            type='password'
-            placeholder='password'
-            />
-          <a className='button button--login'>LOGIN</a>
-        </div>
-      </div>
-    )
-  }
-}
+import Login from './Components/Login'
+import Register from './Components/Register'
+import TodoList from './Components/TodoList'
 
 const AuthBody = props =>
   <div className='app__body__auth'>
@@ -51,12 +19,14 @@ class App extends Component {
     return (
       <Router>
         <div className='app'>
-          <header className='app__header'>
+          <div className='app__header'>
             <h1>My Todo App</h1>
-          </header>
+          </div>
           <div className='app__body'>
             <Route exact path='/' component={AuthBody} />
             <Route exact path='/login' component={Login} />
+            <Route exact path='/register' component={Register} />
+            <Route exact path='/todo' component={TodoList} />
           </div>
         </div>
       </Router>
