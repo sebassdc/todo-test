@@ -1,29 +1,50 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
-import logo from './logo.svg';
+import { BrowserRouter as Router, Route, Link, Redirect } from 'react-router-dom'
+import { connect } from 'react-redux'
 import './App.css';
 import Login from './Components/Login'
 import Register from './Components/Register'
 import TodoList from './Components/TodoList'
+import { userLogout } from './redux/actions/user'
 
 const AuthBody = props =>
   <div className='app__body__auth'>
     <div className='button-container'>
-      <a className='button button--login'>LOGIN</a>
-      <a className='button button--register'>REGISTER</a>
+      <Link to='/login' className='button button--login'>LOGIN</Link>
+      <Link to='/register' className='button button--register'>REGISTER</Link>
     </div>
+    {!props.uid ?
+      <Redirect to='/' /> : null
+    }
   </div>
 
 class App extends Component {
+  handleLogout = e => {
+    this.props.dispatch(userLogout())
+  }
   render() {
     return (
       <Router>
         <div className='app'>
           <div className='app__header'>
             <h1>My Todo App</h1>
+            {this.props.uid ? 
+              <a
+                className='button button--logout'
+                onClick={this.handleLogout}
+                >
+                LOGOUT
+              </a> : null
+            }
           </div>
           <div className='app__body'>
-            <Route exact path='/' component={AuthBody} />
+            <Route
+              exact
+              path='/'
+              component={
+                connect(({uid}) => ({uid}))(AuthBody)
+              }
+              />
             <Route exact path='/login' component={Login} />
             <Route exact path='/register' component={Register} />
             <Route exact path='/todo' component={TodoList} />
@@ -34,4 +55,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default connect(({uid}) => ({uid}))(App)

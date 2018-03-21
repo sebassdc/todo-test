@@ -1,15 +1,28 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { userRegister } from '../redux/actions/user'
+import { Redirect } from 'react-router-dom'
 
 class Register extends Component {
   state = {
     email: '',
     password: '',
     repeatPassword: '',
+    valid: true,
   }
   handleChange = e => {
     this.setState({
       [e.target.name]: e.target.value
     })
+  }
+  handleRegister = e => {
+    const { email, password } = this.state
+    if (this.state.password === this.state.repeatPassword) {
+      this.props.dispatch(userRegister({
+        email,
+        password,
+      }))
+    }
   }
   render() {
     return (
@@ -36,11 +49,26 @@ class Register extends Component {
             type='password'
             placeholder='Repeat Password'
           />
-          <a className='button button--login'>LOGIN</a>
+          <span>
+            {this.state.password === this.state.repeatPassword ?
+              '' : 'password not matched'
+            }
+          </span>
+          <a
+            className='button button--login'
+            onClick={this.handleRegister}
+            >
+            REGISTER
+          </a>
         </div>
+        {this.props.uid ?
+          <Redirect to='/todo'/> : null
+        }
       </div>
     )
   }
 }
 
-export default Register
+export default connect(
+  ({uid}) => ({uid})
+)(Register)

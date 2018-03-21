@@ -1,7 +1,7 @@
 import React from 'react'
 
-export default ({className, children}) =>
-  <div className='modal-container'>
+export default ({children, showed, className=''}) =>
+  <div className={`modal-container ${showed ? 'showed': ''}`}>
     <div className={`modal ${className}`}>
       {children}
     </div>
