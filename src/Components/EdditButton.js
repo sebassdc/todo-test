@@ -41,12 +41,7 @@ export default class extends Component {
             <a
               onClick={e => {
                 this.toogle()
-                if (this.props.completed) {
-                  this.props.handleUncomplete()
-                }
-                else {
-                  this.props.handleComplete()
-                }
+                this.props.handleToogle()
               }}
               className='edit-menu-complete'
               >

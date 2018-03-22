@@ -1,18 +1,24 @@
 import React, { Component } from 'react'
+import TimeAgo from 'timeago-react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
+import {
+  CSSTransition,
+  TransitionGroup
+} from 'react-transition-group'
 import Modal from './Modal'
 import EditButton from './EdditButton'
 import {
-  todoAdd,
-  // todoEdit
+  todoEdit,
+  todoToogle,
+  todoDelete,
 } from '../redux/actions/user'
 
 
 class TodoList extends Component {
   state = {
     editting: false,
-    editIndex: 0,
+    editKey: null,
     taskText: '',
     mode: 'add', // add, edit
   }
@@ -22,23 +28,21 @@ class TodoList extends Component {
       taskText: e.target.value,
     })
   }
-  handleAdd = e => {
-    this.props.dispatch(todoAdd({
-      text: this.state.taskText,
-      completed: false,
-      timestamp: Date.now(),
-    }))
-    this.setState({
-      editting: false,
-    })
-  }
   
-  // handleEdit = e => {
-  //   this.props.dispatch(todoEdit())
-  // }
-
-  handleToggle = e => {
-    console.log("toogle")
+  handleEdit = e => {
+    if (this.state.taskText) {
+      const task = {
+        text: this.state.taskText,
+        timestamp: Date.now(),
+        completed: false,
+        key: this.state.editKey
+      }
+      this.props.dispatch(todoEdit(task))
+      this.setState({
+        editting: false,
+        taskText: '',
+      })
+    }
   }
 
   render () {
@@ -54,12 +58,7 @@ class TodoList extends Component {
             <div className='todo-button-container'>
               <a
                 className='button button--add-ok'
-                onClick={
-                  {
-                    add: this.handleAdd,
-                    edit: this.handleEdit
-                  }[this.state.mode]
-                }
+                onClick={this.handleEdit}
                 >
                 OK
               </a>
@@ -75,40 +74,56 @@ class TodoList extends Component {
               </a>
             </div>
         </Modal>
-        <div className='todo-container'>
-          {this.props.list.map((e, i) =>
-            <div
-              key={i}
-              className='todo-item'
+        <TransitionGroup className='todo-container'>
+          {this.props.list.map((item, i) =>
+            <CSSTransition
+              timeout={400}
+              key={item.key}
+              classNames='todo-item'
               >
-              <p
-                className={e.completed ? 'completed' : ''}
-                >
-                {e.text}
-              </p>
-              <EditButton
-                handleEdit={e => {
-                  this.setState({
-                    editIndex: i,
-                    editting: true,
-                    mode: 'edit',
-                    taskText: this.state.list[i].text
-                  })
-                }}
-                handleDelete={e => {
-                  this.props.dispatch()
-                }}
-                completed={e.completed}
-                />
-            </div>
+              <div className='todo-transition-container'>
+                <div className='todo-item__content'>
+                  <p
+                    className={item.completed ? 'completed' : ''}
+                    >
+                    {item.text}
+                  </p>
+                  <TimeAgo
+                    className='todo_item__timeago'
+                    datetime={item.timestamp}/>
+                </div>
+                <EditButton
+                  handleEdit={e => {
+                    this.setState({
+                      editKey: item.key,
+                      editting: true,
+                      mode: 'edit',
+                      taskText: this.props.list[i].text
+                    })
+                  }}
+                  handleDelete={e => {
+                    this.props.dispatch(todoDelete(item.key))
+                  }}
+                  handleToogle={e => {
+                    const { key, completed } = item
+                    this.props.dispatch(todoToogle({
+                      key,
+                      completed,
+                    }))
+                  }}
+                  completed={item.completed}
+                  />
+              </div>
+            </CSSTransition>
           )}
-        </div>
+        </TransitionGroup>
         <a
           className='button button--add'
           onClick={e => {
+            e.preventDefault()
             this.setState({
-              mode: 'add',
               editting: true,
+              editKey: null,
             })
           }}
           >

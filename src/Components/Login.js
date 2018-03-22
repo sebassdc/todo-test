@@ -43,6 +43,7 @@ class Login extends Component {
             >
             LOGIN
           </a>
+          {this.props.error ? this.props.error.message: null}
         </div>
         {this.props.uid ?
           <Redirect to='/todo'/> : null
@@ -53,5 +54,5 @@ class Login extends Component {
 }
 
 export default connect(
-  ({uid}) => ({uid})
+  ({uid, error}) => ({uid, error})
 )(Login)

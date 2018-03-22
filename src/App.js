@@ -27,7 +27,9 @@ class App extends Component {
       <Router>
         <div className='app'>
           <div className='app__header'>
-            <h1>My Todo App</h1>
+            <Link to='/'>
+              <h1>My Todo App</h1>
+            </Link>
             {this.props.uid ? 
               <a
                 className='button button--logout'

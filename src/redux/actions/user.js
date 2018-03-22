@@ -77,7 +77,10 @@ export const userLogin = ({email, password}) => async (dispatch, getState) => {
     db.ref(`users/${done.uid}/`).on('value', snapshot => {
       const data = snapshot.val()
       if (data) {
+        console.log("Data react childs", Object.values(data))
         dispatch(loadList(Object.values(data)))
+      } else {
+        dispatch(loadList([]))
       }
     })
   } catch (error) {
@@ -107,12 +110,32 @@ export const userLogout = () => async dispatch => {
 
 // Todolist
 
-export const todoAdd = todo => async (dispatch, getState) => {
+export const todoEdit = (todo) => async (dispatch, getState) => {
   const { uid } = getState()
-  const key = db.ref(`users/${uid}`).push().key
-  await db.ref(`users/${uid}/${key}`).set({...todo, key})
+  const key = todo.key || db.ref(`users/${uid}`).push().key
+  try {
+    await db.ref(`users/${uid}/${key}`).update({...todo, key})
+  } catch (error) {
+    // TODO
+  }
 }
 
-// export const todoEdit = () => {
+export const todoToogle = ({key, completed}) => async (dispatch, getState) => {
+  const { uid } = getState()
+  // dispatch()
+  try {
+    await db.ref(`users/${uid}/${key}`).update({completed: !completed})
+  } catch (e) {
+    // dispatch()
+  }
+}
 
-// }
+export const todoDelete = key => async (dispatch, getState) => {
+  const { uid } = getState()
+  // dispatch()
+  try {
+    await db.ref(`users/${uid}/${key}`).remove()
+  } catch (e) {
+    // dispatch()
+  }
+}

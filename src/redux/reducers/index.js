@@ -5,8 +5,8 @@ import {
   USER_REGISTER_DONE,
   USER_LOGIN_STARTED,
   USER_LOGIN_DONE,
+  USER_LOGIN_ERROR,
   CLEAR_STATE,
-  TODO_ADD,
   LOAD_LIST,
 } from '../actions/user'
 
@@ -33,6 +33,11 @@ export default createReducer({
     ...state,
     logining: false,
     uid: action.payload.uid
+  }),
+  [USER_LOGIN_ERROR]: (state, action) => ({
+    ...state,
+    logining: false,
+    error: action.error
   }),
   [CLEAR_STATE]: (state, action) => ({
     uid: null,
